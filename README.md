@@ -335,7 +335,7 @@ Este proyecto nace de los **dolores reales compartidos por Ruth Luján**, docent
 ### 🛠️ Distribución de Trabajo
 
 Este proyecto fue un esfuerzo colaborativo donde cada miembro aportó desde su expertise:
-- **Nayeli** se encargó del diseño y desarrollo técnico del proyecto, incluyendo arquitectura, base de datos e integración de IA
+- **Nayeli** se encargó del diseño y desarrollo técnico fullstack del proyecto
 - **Claudia** aportó experiencia en EdTech y apoyó la validación pedagógica de las funcionalidades
 - **Ruth** compartió insights reales del aula y validó la utilidad práctica de las herramientas
 - **Jasyr** participó proporcionando feedback y reflexiones constructivas
