@@ -190,6 +190,7 @@ dist/
 
 # Railway
 .railway/
+railway.json
 
 # Backup files
 *.backup
