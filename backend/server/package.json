@@ -1,0 +1,26 @@
+{
+  "name": "flexiadapt-server",
+  "version": "1.0.0",
+  "description": "FlexiAdapt Backend Server",
+  "main": "ultra-simple-server.js",
+  "scripts": {
+    "start": "node ultra-simple-server.js",
+    "build": "echo 'No build needed'",
+    "dev": "node ultra-simple-server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/express": "^4.17.17",
+    "@types/cors": "^2.8.13",
+    "@types/ws": "^8.5.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
