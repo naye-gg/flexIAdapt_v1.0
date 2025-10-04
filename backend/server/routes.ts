@@ -47,7 +47,7 @@ class AnalysisService {
       // Save analysis result
       const analysisResult = await storage.createAnalysisResult({
         evidenceId: evidence.id,
-        adaptedScore: analysis.adaptedScore.toString(),
+        adaptedScore: analysis.adaptedScore,
         competencyLevel: analysis.competencyLevel,
         identifiedStrengths: analysis.identifiedStrengths,
         improvementAreas: analysis.improvementAreas,
@@ -939,7 +939,7 @@ export function registerRoutes(app: Express): Server {
       // Crear el resultado del análisis en la base de datos
       await storage.createAnalysisResult({
         evidenceId: id,
-        adaptedScore: analysis.adaptedScore.toString(),
+        adaptedScore: analysis.adaptedScore,
         competencyLevel: analysis.competencyLevel,
         identifiedStrengths: analysis.identifiedStrengths,
         improvementAreas: analysis.improvementAreas,
@@ -1217,8 +1217,7 @@ export function registerRoutes(app: Express): Server {
       const assistantMessage = await storage.createChatMessage({
         chatId,
         role: 'assistant',
-        content: aiResponse,
-        studentContext: JSON.stringify({ studentId: studentId })
+        content: aiResponse
       });
 
       // Update chat's last message timestamp

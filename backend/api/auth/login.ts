@@ -35,11 +35,8 @@ export default async function handler(req: any, res: any) {
           schema = await import('../../shared/schema');
         } catch {
           try {
-            schema = await import('../shared/schema.js');
+            schema = await import('../../shared/schema');
           } catch {
-            try {
-              schema = await import('../shared/schema');
-            } catch {
               // Try relative to root
               schema = await import('shared/schema');
             }

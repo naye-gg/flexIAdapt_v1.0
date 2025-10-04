@@ -39,7 +39,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 registerRoutes(app);
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = parseInt(process.env.PORT || '5000', 10);
 const server = app.listen(PORT, "0.0.0.0", () => {
   log(`serving on port ${PORT}`, "express");
 });
