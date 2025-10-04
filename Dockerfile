@@ -1,36 +1,45 @@
-# Multi-stage build para Railway
-FROM node:18-alpine AS base
+# Use Node.js 18 Alpine image
+FROM node:18-alpine
 
-# Install pnpm
-RUN npm install -g pnpm
+# Install system dependencies and global packages
+RUN apk add --no-cache curl && \
+    npm install -g pnpm tsx
 
-# Set working directory
+# Create app directory
 WORKDIR /app
 
-# Copy root package.json
+# Copy package files for dependency installation
 COPY package.json ./
+COPY backend/package.json ./backend/
+COPY backend/pnpm-lock.yaml ./backend/
 
-# Copy backend files
-COPY backend ./backend
-
-# Install dependencies and build backend
+# Install backend dependencies
 WORKDIR /app/backend
-RUN pnpm install --frozen-lockfile
-RUN pnpm install -g tsx
+RUN pnpm install --frozen-lockfile --production=false
 
-# Create non-root user
-RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
+# Copy all backend source code
+COPY backend/ ./
 
-# Change ownership
-RUN chown -R nextjs:nodejs /app
-USER nextjs
+# Create non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S flexiadapt -u 1001 -G nodejs
 
-# Expose port
+# Change ownership of app directory
+RUN chown -R flexiadapt:nodejs /app
+
+# Switch to non-root user
+USER flexiadapt
+
+# Expose the port
 EXPOSE 5000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:5000/api/health || exit 1
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=5000
 
-# Start the application
-CMD ["pnpm", "start"]
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:${PORT}/api/health || exit 1
+
+# Start the application using tsx (no need to compile TypeScript)
+CMD ["tsx", "server/index.ts"]

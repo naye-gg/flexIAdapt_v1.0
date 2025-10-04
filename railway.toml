@@ -1,9 +1,7 @@
 [build]
-builder = "NIXPACKS"
-buildCommand = "cd backend && pnpm install && pnpm run build"
+builder = "DOCKERFILE"
 
 [deploy]
-startCommand = "cd backend && pnpm start"
 healthcheckPath = "/api/health"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
