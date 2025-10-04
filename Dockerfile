@@ -1,12 +1,15 @@
-# Use Node.js 18 Alpine image - Railway deployment v3 (force rebuild)
+# FlexiAdapt Backend - Railway Deployment
 FROM node:18-alpine
 
-# Cache buster for Railway - force rebuild 2025-10-04
-RUN echo "Cache busted at $(date)"
+# CACHE BUSTER - New build 2025-10-04-v4
+ARG CACHEBUST=1
+RUN echo "Build timestamp: $(date) - Cache bust: $CACHEBUST"
 
-# Install system dependencies and global packages
-RUN apk add --no-cache curl && \
-    npm install -g pnpm tsx
+# Install system dependencies
+RUN apk add --no-cache curl
+
+# Install pnpm and tsx globally using npm (more reliable)
+RUN npm install -g pnpm tsx
 
 # Create app directory
 WORKDIR /app
