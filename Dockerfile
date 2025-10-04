@@ -1,5 +1,8 @@
-# Use Node.js 18 Alpine image
+# Use Node.js 18 Alpine image - Railway deployment v3 (force rebuild)
 FROM node:18-alpine
+
+# Cache buster for Railway - force rebuild 2025-10-04
+RUN echo "Cache busted at $(date)"
 
 # Install system dependencies and global packages
 RUN apk add --no-cache curl && \

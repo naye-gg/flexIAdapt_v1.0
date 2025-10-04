@@ -15,7 +15,7 @@ export const API_CONFIG = {
     UPLOAD: 'upload'
   }
 };
-
+  
 // Helper to build full API URLs usando nuestra función centralizada
 export const buildApiUrl = (endpoint: string) => {
   return apiEndpoint(endpoint);
