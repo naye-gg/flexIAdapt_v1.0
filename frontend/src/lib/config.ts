@@ -1,12 +1,12 @@
 // Configuración de la aplicación
 export const config = {
-  // URLs del backend
-  apiUrl: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
-  backendUrl: import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000',
+  // URLs del backend - TEMPORALMENTE HARDCODEADO PARA RAILWAY
+  apiUrl: 'https://flexiadaptv10.up.railway.app/api',
+  backendUrl: 'https://flexiadaptv10.up.railway.app',
   
   // Configuración de desarrollo
-  isDevelopment: import.meta.env.DEV,
-  isProduction: import.meta.env.PROD,
+  isDevelopment: true,
+  isProduction: false,
   
   // Configuración de la app
   appName: 'FlexiAdapt',

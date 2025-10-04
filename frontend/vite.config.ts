@@ -10,4 +10,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Comentamos el proxy cuando usamos backend remoto
+  // server: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://localhost:5000',
+  //       changeOrigin: true,
+  //     },
+  //   },
+  // },
 })

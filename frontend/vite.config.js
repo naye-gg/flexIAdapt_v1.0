@@ -9,12 +9,13 @@ export default defineConfig({
             "@": path.resolve(__dirname, "./src"),
         },
     },
-    server: {
-        proxy: {
-            '/api': {
-                target: 'http://localhost:5000',
-                changeOrigin: true,
-            },
-        },
-    },
+    // Proxy deshabilitado para usar backend remoto
+    // server: {
+    //     proxy: {
+    //         '/api': {
+    //             target: 'http://localhost:5000',
+    //             changeOrigin: true,
+    //         },
+    //     },
+    // },
 });
