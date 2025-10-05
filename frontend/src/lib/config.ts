@@ -1,12 +1,26 @@
+// Configuración de entorno - cambiar aquí para alternar entre desarrollo y producción
+const USE_LOCAL_BACKEND = false; // Cambiar a false para usar Railway
+
+// URLs de backend
+const BACKEND_URLS = {
+  local: {
+    apiUrl: 'http://localhost:5000/api',
+    backendUrl: 'http://localhost:5000',
+  },
+  production: {
+    apiUrl: 'https://flexiadaptv10-production.up.railway.app/api',
+    backendUrl: 'https://flexiadaptv10-production.up.railway.app',
+  }
+};
+
 // Configuración de la aplicación
 export const config = {
-  // URLs del backend - TEMPORALMENTE HARDCODEADO PARA RAILWAY
-  apiUrl: 'https://flexiadaptv10.up.railway.app/api',
-  backendUrl: 'https://flexiadaptv10.up.railway.app',
+  // URLs del backend (automático según USE_LOCAL_BACKEND)
+  ...(USE_LOCAL_BACKEND ? BACKEND_URLS.local : BACKEND_URLS.production),
   
   // Configuración de desarrollo
-  isDevelopment: true,
-  isProduction: false,
+  isDevelopment: USE_LOCAL_BACKEND,
+  isProduction: !USE_LOCAL_BACKEND,
   
   // Configuración de la app
   appName: 'FlexiAdapt',

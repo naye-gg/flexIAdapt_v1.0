@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { config } from "@/lib/config";
 
 // Hook personalizado para obtener el token de autorización
 export function useAuthToken() {
@@ -18,10 +19,14 @@ export function getAuthHeaders() {
 // Función para hacer fetch autenticado
 export async function authenticatedFetch(url: string, options: RequestInit = {}) {
   const headers = getAuthHeaders();
-  console.log('🔵 Making authenticated request to:', url);
+  
+  // Construir la URL completa si es una URL relativa
+  const fullUrl = url.startsWith('http') ? url : `${config.backendUrl}${url}`;
+  
+  console.log('🔵 Making authenticated request to:', fullUrl);
   console.log('🔵 Headers:', headers);
   
-  const response = await fetch(url, {
+  const response = await fetch(fullUrl, {
     ...options,
     headers: {
       ...headers,

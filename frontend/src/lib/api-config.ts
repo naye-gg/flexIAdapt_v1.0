@@ -1,8 +1,8 @@
-import { apiEndpoint } from './config';
+import { apiEndpoint, config } from './config';
 
 // API Configuration usando la configuración centralizada
 export const API_CONFIG = {
-  BASE_URL: 'https://flexiadaptv10.up.railway.app/api',
+  BASE_URL: config.apiUrl,
   ENDPOINTS: {
     LOGIN: 'auth/login',
     REGISTER: 'auth/register',

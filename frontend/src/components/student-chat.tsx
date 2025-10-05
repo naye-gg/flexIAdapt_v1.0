@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageCircle, Send, Bot, User, Loader2 } from "lucide-react";
-import { apiRequest } from "@/lib/queryClient";
+import { authenticatedFetch } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 
 interface StudentChatProps {
@@ -41,7 +41,7 @@ export default function StudentChat({ student, onClose }: StudentChatProps) {
   const { data: chats = [], isLoading: chatsLoading } = useQuery({
     queryKey: ["/api/students", student.id, "chats"],
     queryFn: async () => {
-      const response = await apiRequest("GET", `/api/students/${student.id}/chats`);
+      const response = await authenticatedFetch(`/api/students/${student.id}/chats`);
       const data = await response.json();
       return data.chats || [];
     }
@@ -52,7 +52,7 @@ export default function StudentChat({ student, onClose }: StudentChatProps) {
     queryKey: ["/api/chats", currentChatId, "messages"],
     queryFn: async () => {
       if (!currentChatId) return [];
-      const response = await apiRequest("GET", `/api/chats/${currentChatId}/messages`);
+      const response = await authenticatedFetch(`/api/chats/${currentChatId}/messages`);
       const data = await response.json();
       return data.messages || [];
     },
@@ -62,8 +62,10 @@ export default function StudentChat({ student, onClose }: StudentChatProps) {
   // Create new chat mutation
   const createChatMutation = useMutation({
     mutationFn: async () => {
-      const response = await apiRequest("POST", `/api/students/${student.id}/chats`, {
-        title: `Chat - ${student.name}`
+      const response = await authenticatedFetch(`/api/students/${student.id}/chats`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: `Chat - ${student.name}` })
       });
       return response.json();
     },
@@ -88,8 +90,10 @@ export default function StudentChat({ student, onClose }: StudentChatProps) {
   const sendMessageMutation = useMutation({
     mutationFn: async (content: string) => {
       if (!currentChatId) throw new Error("No chat selected");
-      const response = await apiRequest("POST", `/api/chats/${currentChatId}/messages`, {
-        content
+      const response = await authenticatedFetch(`/api/chats/${currentChatId}/messages`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content })
       });
       return response.json();
     },
