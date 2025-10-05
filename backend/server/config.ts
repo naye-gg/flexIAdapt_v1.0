@@ -14,12 +14,12 @@ const configSchema = z.object({
   API_URL: z.string().url().default("http://localhost:5000/api"),
   
   // AI Configuration
-  GEMINI_API_KEY: z.string().optional(),
-  GITHUB_MODELS_API_KEY: z.string().optional(),
+  GOOGLE_API_KEY: z.string().optional(),
+  GITHUB_TOKEN: z.string().optional(),
   GITHUB_MODELS_ENDPOINT: z.string().url().default("https://models.inference.ai.azure.com"),
   OPENAI_API_KEY: z.string().optional(),
   AI_PROVIDER: z.enum(["gemini", "github_models", "openai"]).default("gemini"),
-  AI_FALLBACK_PROVIDER: z.enum(["gemini", "github_models", "openai"]).default("github_models"),
+  AI_FALLBACK_PROVIDER: z.enum(["gemini", "github_models", "openai"]).default("gemini"),
   AI_MODEL_NAME: z.string().default("gemini-1.5-flash"),
   GITHUB_MODEL_NAME: z.string().default("gpt-4o-mini"),
   AI_MAX_TOKENS: z.string().transform((val) => parseInt(val, 10)).default("1000"),

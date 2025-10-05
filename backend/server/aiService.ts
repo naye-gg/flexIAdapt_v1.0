@@ -50,22 +50,22 @@ class AIService {
     console.log('🤖 Initializing AI clients...');
     
     // Initialize Gemini
-    if (config.GEMINI_API_KEY) {
-      this.geminiClient = new GoogleGenerativeAI(config.GEMINI_API_KEY);
+    if (config.GOOGLE_API_KEY) {
+      this.geminiClient = new GoogleGenerativeAI(config.GOOGLE_API_KEY);
       console.log('✅ Gemini client initialized');
     } else {
-      console.log('⚠️  Gemini API key not found');
+      console.log('⚠️  Google API key not found');
     }
 
     // Initialize GitHub Models (uses OpenAI format)
-    if (config.GITHUB_MODELS_API_KEY) {
+    if (config.GITHUB_TOKEN) {
       this.githubClient = new OpenAI({
-        apiKey: config.GITHUB_MODELS_API_KEY,
+        apiKey: config.GITHUB_TOKEN,
         baseURL: config.GITHUB_MODELS_ENDPOINT,
       });
       console.log('✅ GitHub Models client initialized');
     } else {
-      console.log('⚠️  GitHub Models API key not found');
+      console.log('⚠️  GitHub Token not found');
     }
 
     // Initialize OpenAI (optional)
@@ -144,7 +144,7 @@ class AIService {
     
     if (!this.geminiClient) {
       console.log('❌ Gemini client not initialized');
-      throw new Error('Gemini client not initialized. Please check GEMINI_API_KEY.');
+      throw new Error('Gemini client not initialized. Please check GOOGLE_API_KEY.');
     }
 
     try {
@@ -207,7 +207,7 @@ class AIService {
     
     if (!this.githubClient) {
       console.log('❌ GitHub Models client not initialized');
-      throw new Error('GitHub Models client not initialized. Please check GITHUB_MODELS_API_KEY.');
+      throw new Error('GitHub Models client not initialized. Please check GITHUB_TOKEN.');
     }
 
     try {
@@ -461,19 +461,22 @@ Responde ÚNICAMENTE en el siguiente formato JSON (array de 3 objetos):
     console.log('🤖 Generating chat response...');
     
     try {
+      // Usar Gemini directamente
       const options = {
-        modelName: 'gpt-4o-mini',
+        modelName: 'gemini-2.5-flash',
         maxTokens: 1000,
         temperature: 0.7,
+        startTime: Date.now()
       };
 
-      const response = await this.generateWithGitHub(prompt, options);
+      console.log('🔷 Using Gemini directly for chat...');
+      const response = await this.generateWithGemini(prompt, options);
       return response.content;
     } catch (error) {
       console.error('❌ Error generating chat response:', error);
       
       // Fallback response
-      return "Lo siento, no puedo acceder a la información del estudiante en este momento. Por favor, intenta nuevamente más tarde.";
+      return "Lo siento, hubo un error con el servicio de IA. Error: " + (error as Error).message;
     }
   }
 
