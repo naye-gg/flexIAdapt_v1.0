@@ -17,8 +17,8 @@ RUN pnpm install --frozen-lockfile
 # Copiar el código fuente
 COPY . .
 
-# Instalar tsx para ejecutar TypeScript directamente
-RUN pnpm install -g tsx
+# Instalar tsx para ejecutar TypeScript directamente (usar npm para global)
+RUN npm install -g tsx
 
 # Crear usuario no-root por seguridad
 RUN addgroup -g 1001 -S nodejs
